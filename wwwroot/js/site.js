@@ -1,5 +1,11 @@
 var sprite;
 let ratio = 2048 / 1546;
+var truckVel = 0;
+var truckNegVel = -1;
+var truck;
+var wheelMaterial;
+var allowTruckBounce = true;
+var worldMaterial;
 var GameScene = new Phaser.Class({
 
   Extends: Phaser.Scene,
@@ -34,7 +40,7 @@ var GameScene = new Phaser.Class({
     this.load.image('bg9', 'assets/3.png');
     this.load.image('bg10', 'assets/2.png');
     this.load.image('bg11', 'assets/1.png');
-    this.load.spritesheet('car', 'assets/car-full.png',{frameWidth: 690, frameHeight: 257});
+    this.load.spritesheet('truck', 'assets/car-full.png',{frameWidth: 690, frameHeight: 257});
 
     // this.load.spritesheet('enemy', 'assets/LightBandit_Spritesheet.png',{frameWidth: 48, frameHeight: 48});
     // this.load.spritesheet('health', 'assets/Gradient_Health_Bar.png', {frameWidth: 203, frameHeight: 26});
@@ -56,6 +62,8 @@ var GameScene = new Phaser.Class({
   	this.bg9 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg9').setOrigin(0, 0);
   	this.bg10 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg10').setOrigin(0, 0);
   	this.bg11 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg11').setOrigin(0, 0);
+
+
     // this.bg11 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg11').setOrigin(0, 0);
 		// this.bg10 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg10').setOrigin(0, 0);
 		// this.bg9 = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'bg9').setOrigin(0, 0);
@@ -137,7 +145,7 @@ var GameScene = new Phaser.Class({
       // this.health2 = this.physics.add.sprite(0,0, 'health2').setOrigin(0,0);
       // this.health2.setCollideWorldBounds(true);
 
-      this.player = this.physics.add.sprite(0, -300, 'car');
+      this.player = this.physics.add.sprite(0, -300, 'truck');
 
       //this.player = this.physics.add.sprite(0, 0, 'character2');
       // this.enemy = this.physics.add.sprite(1000, 0, 'enemy');
@@ -155,8 +163,8 @@ var GameScene = new Phaser.Class({
     		this.player.setScale(0.35);
     		//this.player.body.setSize(14, 7, 31, 35);
         this.player.body.mass = 50;
-    		this.player.body.setSize((690*0.35), (250*0.35), false);
-    		this.player.body.setOffset(200, 170);
+    		this.player.body.setSize(690, 257, false);
+    		this.player.body.setOffset(0, 0);
         //this.physics.add.collider(this.enemy, platforms);
     		// this.physics.add.collider(this.player, platforms);
       //  this.physics.add.collider(this.player, platforms2);
@@ -226,25 +234,43 @@ var GameScene = new Phaser.Class({
 
       // console.log("enemy" + Math.abs(enemy.body.velocity.x));
       // console.log("player" +isHit);
-      console.log(this.cursors);
+
       // player 863
       // enemy 960
       //accelerateTo: function (gameObject, x, y, speed, xSpeedMax, ySpeedMax)
-
-    if (cursors.right.isDown && onGround) {
-  			player.setVelocityX(400);
+      if(Math.abs(player.body.velocity.x) < 5.){
+        truckVel = 0;
+        player.setVelocityX(truckVel);
+        player.setGravityX(0);
+        moving = false;
+      }
+        console.log("speed" + truckVel);
+    if (cursors.right.isDown && onGround && !cursors.left.isDown) {
+      moving = true;
+      if(truckVel < 400){
+        truckVel += 5;
+      }
+      cursors.right.on('up', function(event)
+      {
+        truckVel = 0;
+        player.setGravityX(-200);
+      });
+  			player.setVelocityX(truckVel);
         player.flipX = false;
   		}
 
-  		if (cursors.left.isDown) {
-  			player.setVelocityX(-400); // move left
-  			moving = true;
-  			player.flipX = true;
-  		}
-      if (cursors.down.isDown) {
-  			player.setVelocityX(0);
-        //health.setVelocityX(-400);
-  			moving = false;
+  		if (cursors.left.isDown && onGround && !cursors.right.isDown) {
+        moving = true;
+        if(truckVel < 400){
+          truckVel += 5;
+        }
+        cursors.left.on('up', function(event)
+        {
+          truckVel = 0;
+          player.setGravityX(200);
+        });
+          player.setVelocityX(truckVel * (-1));
+          player.flipX = true;
   		}
 
 
