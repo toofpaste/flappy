@@ -13,25 +13,25 @@ var mainState = {
         game.scale.pageAlignVertically = true;
 
         //game.stage.backgroundColor = '#71c5cf';
-        game.load.image('pipe', 'assets/this.png');
-        game.load.spritesheet('copter', 'assets/fire.png', 64, 64, 60);
-        this.game.load.image('bg1', 'assets/1.png');
-        this.game.load.image('bg2', 'assets/2.png');
-        this.game.load.image('bg3', 'assets/3.png');
-        this.game.load.image('bg4', 'assets/4.png');
-        this.game.load.image('bg5', 'assets/5.png');
-        this.game.load.image('bg6', 'assets/6.png');
-        this.game.load.image('bg7', 'assets/7.png');
-        this.game.load.image('bg8', 'assets/8.png');
-        this.game.load.image('bg9', 'assets/9.png');
-        this.game.load.image('bg10', 'assets/10.png');
-        this.game.load.image('bg11', 'assets/11.png');
-        //game.load.spritesheet('fire', 'assets/fire.png', 57, 192, 3);
+        game.load.image('pipe', 'assetsFlap/this.png');
+        game.load.spritesheet('copter', 'assetsFlap/fire.png', 64, 64, 60);
+        this.game.load.image('bg1', 'assetsFlap/1.png');
+        this.game.load.image('bg2', 'assetsFlap/2.png');
+        this.game.load.image('bg3', 'assetsFlap/3.png');
+        this.game.load.image('bg4', 'assetsFlap/4.png');
+        this.game.load.image('bg5', 'assetsFlap/5.png');
+        this.game.load.image('bg6', 'assetsFlap/6.png');
+        this.game.load.image('bg7', 'assetsFlap/7.png');
+        this.game.load.image('bg8', 'assetsFlap/8.png');
+        this.game.load.image('bg9', 'assetsFlap/9.png');
+        this.game.load.image('bg10', 'assetsFlap/10.png');
+        this.game.load.image('bg11', 'assetsFlap/11.png');
+        //game.load.spritesheet('fire', 'assetsFlap/fire.png', 57, 192, 3);
         //57 192
         //http://www.lessmilk.com/tutorial/flappy-bird-phaser-1
         // Load the jump sound
-        game.load.audio('jump', 'assets/Suck.wav');
-        game.load.audio('death', 'assets/Death.wav');
+        game.load.audio('jump', 'assetsFlap/Suck.wav');
+        game.load.audio('death', 'assetsFlap/Death.wav');
         //game.load.audio('track', 'assets/track.wav');
 
 
